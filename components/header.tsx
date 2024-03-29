@@ -136,7 +136,7 @@ export function Header() {
           <span className="hidden ml-2 md:flex">WEB</span>
         </a>
         <a
-          href="https://labs.webspaceai.in/"
+          href="https://labs.webspaceai.in"
           target="_blank"
           className={cn(buttonVariants())}
         >
