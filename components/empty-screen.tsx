@@ -10,10 +10,5 @@ const exampleMessages = [
 ]
 
 export function EmptyScreen() {
-  return (
-    <div className="mx-auto max-w-2xl px-4">
-      <div className="flex flex-col gap-2 rounded-lg border bg-background p-8">
-      </div>
-    </div>
-  )
+  return null
 }
