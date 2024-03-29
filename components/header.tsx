@@ -1,10 +1,12 @@
 import * as React from 'react'
 import Link from 'next/link'
-
 import { cn } from '@/lib/utils'
 import { auth } from '@/auth'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { IconSeparator } from '@/components/ui/icons'
+import {
+  IconNextChat,
+  IconSeparator,
+} from '@/components/ui/icons'
 import { UserMenu } from '@/components/user-menu'
 import { SidebarMobile } from './sidebar-mobile'
 import { SidebarToggle } from './sidebar-toggle'
@@ -24,8 +26,8 @@ async function UserOrLogin() {
         </>
       ) : (
         <Link href="/new" rel="nofollow">
-          <IconSeparator className="size-6 mr-2 dark:hidden" inverted />
-          <IconSeparator className="hidden size-6 mr-2 dark:block" />
+          <IconNextChat className="size-6 mr-2 dark:hidden" inverted />
+          <IconNextChat className="hidden size-6 mr-2 dark:block" />
         </Link>
       )}
       <div className="flex items-center">
@@ -49,9 +51,6 @@ export function Header() {
         <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
           <UserOrLogin />
         </React.Suspense>
-      </div>
-      <div className="flex items-center justify-end">
-        <div className="flex-1 overflow-auto" />
       </div>
     </header>
   )
