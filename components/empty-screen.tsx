@@ -24,10 +24,10 @@ export function EmptyScreen() {
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 rounded-lg border bg-background p-8">
         <h1 className="text-lg font-semibold">
-          WEBSPACEAI RESEARSCH 
+          WEBSPACEAI RESEARCH 
         </h1>
         <p className="leading-normal text-muted-foreground">
-          Meet Sky AI: Wit, Sarcasm, and Humor in a Digital Package! 🚀✨ Join us at Sky AI Labs for a fun-filled journey through knowledge and laughter! 😄 #SkyAI #WitAndWisdom
+          Meet Sky AI: Wit, Sarcasm, and Humor in a Digital Package! 🚀✨ Chat at Sky AI Labs for a fun-filled journey through knowledge and laughter! 😄 
           .
         </p>
       </div>
