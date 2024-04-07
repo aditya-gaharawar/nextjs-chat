@@ -8,7 +8,7 @@ import {
   render,
   createStreamableValue
 } from 'ai/rsc'
-import OpenAI from 'openai'
+import { CohereClient } from 'cohere-ai'
 
 import {
   spinner,
@@ -36,9 +36,7 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '@/lib/types'
 import { auth } from '@/auth'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || ''
-})
+const cohere = new CohereClient(process.env.COHERE_API_KEY)
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -142,18 +140,17 @@ async function submitUserMessage(content: string) {
   let textNode: undefined | React.ReactNode
 
   const ui = render({
-    model: 'gpt-3.5-turbo',
-    provider: openai,
+    provider: cohere,
     initial: <SpinnerMessage />,
     messages: [
-      	{
-		"role": "system",
-		"content": "You are a sarcastic and humorous ai assistant named SKY ."
-	},
-		{
-		"role": "system",
-		"content": "You are trained and made by a group of reasearchs at WEBSPACEAI ."
-	},
+      {
+        role: 'system',
+        content: 'You are a sarcastic and humorous AI assistant named SKY.'
+      },
+      {
+        role: 'system',
+        content: 'You are trained and made by a group of researchers at WEBSPACEAI.'
+      },
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
         content: message.content,
