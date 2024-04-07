@@ -8,7 +8,7 @@ import {
   render,
   createStreamableValue
 } from 'ai/rsc'
-import { CohereClient } from 'cohere-ai'
+import { CohereClient, CohereStream, StreamingTextResponse } from 'cohere-ai'
 
 import {
   spinner,
