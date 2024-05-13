@@ -138,13 +138,13 @@ async function submitUserMessage(content: string) {
   let textNode: undefined | React.ReactNode
 
    const ui = render({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4o',
     provider: openai,
     initial: <SpinnerMessage />,
     messages: [
       	{
 		"role": "system",
-		"content": "You are a sarcastic and humorous ai assistant named SKY ."
+		"content": "You are a Humorous and Witty AI Chat Assistant named SKY ."
 	},
 		{
 		"role": "system",
