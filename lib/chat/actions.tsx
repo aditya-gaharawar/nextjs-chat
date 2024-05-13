@@ -5,10 +5,10 @@ import {
   createStreamableUI,
   getMutableAIState,
   getAIState,
-  render,
+  streamUI,
   createStreamableValue
 } from 'ai/rsc'
-import { CohereClient, CohereStream, StreamingTextResponse } from 'cohere-ai'
+import { openai } from '@ai-sdk/openai'
 
 import {
   spinner,
@@ -35,8 +35,6 @@ import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '@/lib/types'
 import { auth } from '@/auth'
-
-const cohere = new CohereClient(process.env.COHERE_API_KEY)
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -139,18 +137,19 @@ async function submitUserMessage(content: string) {
   let textStream: undefined | ReturnType<typeof createStreamableValue<string>>
   let textNode: undefined | React.ReactNode
 
-  const ui = render({
-    provider: cohere,
+   const ui = render({
+    model: 'gpt-3.5-turbo',
+    provider: openai,
     initial: <SpinnerMessage />,
     messages: [
-      {
-        role: 'system',
-        content: 'You are a sarcastic and humorous AI assistant named SKY.'
-      },
-      {
-        role: 'system',
-        content: 'You are trained and made by a group of researchers at WEBSPACEAI.'
-      },
+      	{
+		"role": "system",
+		"content": "You are a sarcastic and humorous ai assistant named SKY ."
+	},
+		{
+		"role": "system",
+		"content": "You are trained and made by a group of reasearchs at WEBSPACEAI ."
+	},
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
         content: message.content,
@@ -182,7 +181,7 @@ async function submitUserMessage(content: string) {
 
       return textNode
     },
-    functions: {
+    tools: {
       listStocks: {
         description: 'List three imaginary stocks that are trending.',
         parameters: z.object({
@@ -194,7 +193,7 @@ async function submitUserMessage(content: string) {
             })
           )
         }),
-        render: async function* ({ stocks }) {
+        generate: async function* ({ stocks }) {
           yield (
             <BotCard>
               <StocksSkeleton />
@@ -235,7 +234,7 @@ async function submitUserMessage(content: string) {
           price: z.number().describe('The price of the stock.'),
           delta: z.number().describe('The change in price of the stock')
         }),
-        render: async function* ({ symbol, price, delta }) {
+        generate: async function* ({ symbol, price, delta }) {
           yield (
             <BotCard>
               <StockSkeleton />
@@ -280,7 +279,7 @@ async function submitUserMessage(content: string) {
               'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.'
             )
         }),
-        render: async function* ({ symbol, price, numberOfShares = 100 }) {
+        generate: async function* ({ symbol, price, numberOfShares = 100 }) {
           if (numberOfShares <= 0 || numberOfShares > 1000) {
             aiState.done({
               ...aiState.get(),
@@ -342,7 +341,7 @@ async function submitUserMessage(content: string) {
             })
           )
         }),
-        render: async function* ({ events }) {
+        generate: async function* ({ events }) {
           yield (
             <BotCard>
               <EventsSkeleton />
@@ -376,7 +375,7 @@ async function submitUserMessage(content: string) {
 
   return {
     id: nanoid(),
-    display: ui
+    display: result.value
   }
 }
 
@@ -404,7 +403,7 @@ export const AI = createAI<AIState, UIState>({
   },
   initialUIState: [],
   initialAIState: { chatId: nanoid(), messages: [] },
-  unstable_onGetUIState: async () => {
+  onGetUIState: async () => {
     'use server'
 
     const session = await auth()
@@ -420,7 +419,7 @@ export const AI = createAI<AIState, UIState>({
       return
     }
   },
-  unstable_onSetAIState: async ({ state, done }) => {
+  onSetAIState: async ({ state, done }) => {
     'use server'
 
     const session = await auth()
