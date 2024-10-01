@@ -9,7 +9,7 @@ import {
   createStreamableValue
 } from 'ai/rsc'
 import { generateText } from 'ai'
-
+import { openai } from '@ai-sdk/openai'
 import {
   spinner,
   BotCard,
