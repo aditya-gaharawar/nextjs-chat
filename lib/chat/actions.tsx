@@ -1,4 +1,4 @@
-import 'server-only'
+'use server'
 
 import { generateText } from 'ai'
 import {
