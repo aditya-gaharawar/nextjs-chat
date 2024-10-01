@@ -8,7 +8,6 @@ import {
   streamUI,
   createStreamableValue
 } from 'ai/rsc'
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 
 import {
