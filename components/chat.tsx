@@ -11,8 +11,6 @@ import { Message, Session } from '@/lib/types'
 import { usePathname, useRouter } from 'next/navigation'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
-import { TickerTape } from '@/components/tradingview/ticker-tape'
-import { MissingApiKeyBanner } from '@/components/missing-api-key-banner'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
